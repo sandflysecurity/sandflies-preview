@@ -1,0 +1,42 @@
+{
+        "active": true,
+        "author": "Sandfly Security",
+        "comment": "",
+        "description": "Looks for SSH daemon spawned processes with suspicious process environments related to backdoor activity.",
+        "format": "4.0",
+        "max_cpu_load": 1,
+        "max_disk_load": 1,
+        "max_timeout": 360,
+        "name": "process_environ_sshd_spawn_custom",
+        "options": {
+            "engines": [
+                "sandfly_engine_process"
+            ],
+            "explanation": "The process name '{process.name}' with PID '{process.pid}' has an environment variable indicating it was spawned by the SSH daemon in a way that is not typically done. This activity has been associated with malicious SSH daemon backdoors and should be investigated.",
+            "response": {
+                "process": {
+                    "kill": false,
+                    "suspend": false
+                }
+            },
+            "rule_op": "and",
+            "rules": [
+                "any(process.environ, {# matches '^(?:RUNTIME_DIRECTORY=/run/sshd|SSHD_OPTS=)$'})",
+                "process.name not matches '^sshd$'"
+            ]
+        },
+        "severity": 5,
+        "tags": [
+            "attack.id.T1048",
+            "attack.id.T1059.004",
+            "attack.id.T1095",
+            "attack.tactic.command_and_control",
+            "attack.tactic.execution",
+            "attack.tactic.exfiltration",
+            "process"
+        ],
+        "type": "process",
+        "version": "2024-04-02T21:29:57.579Z",
+        "custom": true,
+        "date_added": "2024-04-02T21:30:06Z"
+}
