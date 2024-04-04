@@ -21,7 +21,7 @@
             },
             "rule_op": "and",
             "rules": [
-                "any(process.environ, {# matches '^(?:RUNTIME_DIRECTORY=/run/sshd|SSHD_OPTS=|MEMORY_PRESSURE_WATCH=.+\\\\/sshd\\\\.service)'})",
+                "any(process.environ, {# matches '^(RUNTIME_DIRECTORY=/run/sshd$|SSHD_OPTS=|MEMORY_PRESSURE_WATCH=.+\\\\/sshd\\\\.service\\\\b)'})",
                 "process.name not matches '^sshd$'"
             ]
         },
